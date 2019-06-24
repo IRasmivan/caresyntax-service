@@ -14,15 +14,23 @@ import com.rasmivan.caresyntax.exception.InvalidRoomDetails;
 import com.rasmivan.caresyntax.helper.CommonValidationUtils;
 import com.rasmivan.caresyntax.repository.RoomRepository;
 
+/**
+ * The Class RoomServiceImp.
+ */
 @Service
 public class RoomServiceImp implements RoomService {
 	
+	/** The common validation utils. */
 	@Autowired
 	CommonValidationUtils commonValidationUtils;
 	
+	/** The room repository. */
 	@Autowired
 	RoomRepository roomRepository;
 
+	/* (non-Javadoc)
+	 * @see com.rasmivan.caresyntax.service.RoomService#getAllRooms(int, int)
+	 */
 	@Override
 	public Page<Room> getAllRooms(int pageNumber, int pageSize) {
 		commonValidationUtils.validatePageSizeAndPageNumber(pageNumber, pageSize);
@@ -30,6 +38,9 @@ public class RoomServiceImp implements RoomService {
 		return roomRepository.findAll(pageable);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.rasmivan.caresyntax.service.RoomService#addRoom(com.rasmivan.caresyntax.dto.RoomDto)
+	 */
 	@Override
 	public Room addRoom(RoomDto roomDto) {
 		Room room = new Room();

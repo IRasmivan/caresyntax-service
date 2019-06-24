@@ -12,15 +12,23 @@ import com.rasmivan.caresyntax.dto.DoctorDto;
 import com.rasmivan.caresyntax.helper.CommonValidationUtils;
 import com.rasmivan.caresyntax.repository.DoctorRepository;
 
+/**
+ * The Class DoctorServiceImp.
+ */
 @Service
 public class DoctorServiceImp implements DoctorService {
 	
+	/** The common validation utils. */
 	@Autowired
 	CommonValidationUtils commonValidationUtils;
 	
+	/** The doctor repository. */
 	@Autowired
 	DoctorRepository doctorRepository;
 
+	/* (non-Javadoc)
+	 * @see com.rasmivan.caresyntax.service.DoctorService#getAllDoctors(int, int)
+	 */
 	@Override
 	public Page<Doctor> getAllDoctors(int pageNumber, int pageSize) {
 		commonValidationUtils.validatePageSizeAndPageNumber(pageNumber, pageSize);
@@ -28,6 +36,9 @@ public class DoctorServiceImp implements DoctorService {
 		return doctorRepository.findAll(pageable);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.rasmivan.caresyntax.service.DoctorService#addDoctor(com.rasmivan.caresyntax.dto.DoctorDto)
+	 */
 	@Override
 	public Doctor addDoctor(DoctorDto doctorDto) {
 		Doctor doctor = new Doctor();

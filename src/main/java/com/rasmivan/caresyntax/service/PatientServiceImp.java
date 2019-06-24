@@ -18,18 +18,27 @@ import com.rasmivan.caresyntax.helper.CommonValidationUtils;
 import com.rasmivan.caresyntax.helper.PatientPredicateUtils;
 import com.rasmivan.caresyntax.repository.PatientRepository;
 
+/**
+ * The Class PatientServiceImp.
+ */
 @Service
 public class PatientServiceImp implements PatientService {
 
+	/** The patient repository. */
 	@Autowired
 	PatientRepository patientRepository;
 	
+	/** The patient predicate utils. */
 	@Autowired
 	PatientPredicateUtils patientPredicateUtils;
 	
+	/** The common validation utils. */
 	@Autowired
 	CommonValidationUtils commonValidationUtils;
 	
+	/* (non-Javadoc)
+	 * @see com.rasmivan.caresyntax.service.PatientService#getAllPatient(int, int)
+	 */
 	@Override
 	public Page<Patient> getAllPatient(int pageNumber, int pageSize) {
 		commonValidationUtils.validatePageSizeAndPageNumber(pageNumber, pageSize);
@@ -37,6 +46,9 @@ public class PatientServiceImp implements PatientService {
 		return patientRepository.findAll(pageable);
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.rasmivan.caresyntax.service.PatientService#getProductByPatientName(java.lang.String)
+	 */
 	@Override
 	public Patient getProductByPatientName(String patientName) {
 		if(patientName != null) {
@@ -51,12 +63,18 @@ public class PatientServiceImp implements PatientService {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.rasmivan.caresyntax.service.PatientService#addPatient(com.rasmivan.caresyntax.dto.PatientDto)
+	 */
 	@Override
 	public Patient addPatient(PatientDto patientDto) {
 		validatePatientDto(patientDto);
 		return patientRepository.save(convertDtoToDomain(patientDto));
 	}
 
+	/* (non-Javadoc)
+	 * @see com.rasmivan.caresyntax.service.PatientService#updatePatient(com.rasmivan.caresyntax.dto.PatientDto)
+	 */
 	@Override
 	public Patient updatePatient(PatientDto patientDto) {
 		validatePatientForUpdate(patientDto);
@@ -69,6 +87,9 @@ public class PatientServiceImp implements PatientService {
 		return patientRepository.save(patient);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.rasmivan.caresyntax.service.PatientService#deletePatient(com.rasmivan.caresyntax.dto.PatientDto)
+	 */
 	@Override
 	public String deletePatient(PatientDto patientDto) {
 		if(patientDto != null) { 
@@ -80,6 +101,9 @@ public class PatientServiceImp implements PatientService {
 		return MessageConstantsUtils.DELETED_SUCCESSFULLY;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.rasmivan.caresyntax.service.PatientService#validatePatientExists(java.lang.Long)
+	 */
 	@Override
 	public boolean validatePatientExists(Long patientId) {
 		if(patientId != null) {
@@ -92,12 +116,23 @@ public class PatientServiceImp implements PatientService {
 		return true;
 	}
 	
+	/**
+	 * Convert dto to domain.
+	 *
+	 * @param patientDto the patient dto
+	 * @return the patient
+	 */
 	private Patient convertDtoToDomain(PatientDto patientDto) {
 		Patient patient = new Patient();
 		BeanUtils.copyProperties(patientDto, patient);
 		return patient;
 	}
 	
+	/**
+	 * Validate patient dto.
+	 *
+	 * @param patientDto the patient dto
+	 */
 	private void validatePatientDto(PatientDto patientDto) {
 		if(patientDto != null) {
 			if(patientPredicateUtils.checkIfValidPatientName(patientDto)) { // Check if the Patient Name is valid is not NULL
@@ -116,6 +151,11 @@ public class PatientServiceImp implements PatientService {
 		}
 	}
 	
+	/**
+	 * Validate patient for update.
+	 *
+	 * @param patientDto the patient dto
+	 */
 	private void validatePatientForUpdate(PatientDto patientDto) {
 		validatePatientDto(patientDto);
 		validatePatientExists(patientDto.getId());

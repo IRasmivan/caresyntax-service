@@ -7,16 +7,30 @@ import org.springframework.stereotype.Component;
 import com.rasmivan.caresyntax.constants.GeneralConstantsUtils;
 import com.rasmivan.caresyntax.dto.PatientDto;
 
-
+/**
+ * The Class PatientPredicateUtils.
+ */
 @Component
 public class PatientPredicateUtils {
 	
+	/**
+	 * Check if valid patient name.
+	 *
+	 * @param patient the patient
+	 * @return true, if successful
+	 */
 	public boolean checkIfValidPatientName(PatientDto patient) {
 		Predicate<PatientDto> patientPredicate =  p -> (p.getName() == null || p.getName().isEmpty());
 		return patientPredicate.test(patient);
 	}
 	
 	
+	/**
+	 * Check if valid patient sex.
+	 *
+	 * @param patient the patient
+	 * @return true, if successful
+	 */
 	public boolean checkIfValidPatientSex(PatientDto patient) {
 		Predicate<PatientDto> patientPredicate =  patientDto -> 
 					(patientDto.getSex() != null && 
@@ -28,6 +42,12 @@ public class PatientPredicateUtils {
 		return patientPredicate.test(patient);
 	}
 	
+	/**
+	 * Check if valid patient dob.
+	 *
+	 * @param patient the patient
+	 * @return true, if successful
+	 */
 	public boolean checkIfValidPatientDob(PatientDto patient) {
 		Predicate<PatientDto> patientPredicate =  patientDto -> 
 										(patientDto.getDateOfBirth() != null && 

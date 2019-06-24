@@ -8,11 +8,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.rasmivan.caresyntax.domain.Doctor;
 
-
+/**
+ * The Interface DoctorRepository.
+ */
 @Transactional
 @CacheConfig(cacheNames={"doctor_repo"})
 public interface DoctorRepository  extends JpaRepository<Doctor, Long>, JpaSpecificationExecutor<Doctor> {
 	
+	/* (non-Javadoc)
+	 * @see org.springframework.data.repository.CrudRepository#save(S)
+	 */
 	@CacheEvict(value = "doctor", allEntries = true)
 	<S extends Doctor> S save(S entity);
 

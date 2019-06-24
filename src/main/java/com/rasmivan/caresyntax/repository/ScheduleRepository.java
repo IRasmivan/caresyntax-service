@@ -14,14 +14,26 @@ import org.springframework.transaction.annotation.Transactional;
 import com.rasmivan.caresyntax.domain.Schedule;
 import com.rasmivan.caresyntax.dto.ScheduleDto;
 
-
+/**
+ * The Interface ScheduleRepository.
+ */
 @Transactional
 @CacheConfig(cacheNames={"schedule_repo"})
 public interface ScheduleRepository  extends JpaRepository<Schedule, Long>, JpaSpecificationExecutor<Schedule> {
 	
+	/* (non-Javadoc)
+	 * @see org.springframework.data.repository.CrudRepository#save(S)
+	 */
 	@CacheEvict(value = "schedule", allEntries = true)
 	<S extends Schedule> S save(S entity);
 	
+	/**
+	 * Gets the schedule by doctor id and study id.
+	 *
+	 * @param doctorId the doctor id
+	 * @param studyId the study id
+	 * @return the schedule by doctor id and study id
+	 */
 	@Cacheable(value = "study",  key="{#schedule}")
 	@Query("Select NEW com.rasmivan.caresyntax.dto.ScheduleDto("
 			+ "sched.id, "

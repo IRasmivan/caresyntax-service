@@ -10,12 +10,22 @@ import com.rasmivan.caresyntax.dto.StudyDto;
 import com.rasmivan.caresyntax.service.PatientService;
 
 
+/**
+ * The Class StudyPredicateUtils.
+ */
 @Component
 public class StudyPredicateUtils {
 	
+	/** The patient service. */
 	@Autowired
 	PatientService patientService;
 	
+	/**
+	 * Check if valid patient.
+	 *
+	 * @param study the study
+	 * @return true, if successful
+	 */
 	public boolean checkIfValidPatient(StudyDto study) {
 		Predicate<StudyDto> studyPredicate =  studyDto -> 
 													(studyDto.getPatient() == null) || 
@@ -24,6 +34,12 @@ public class StudyPredicateUtils {
 		return studyPredicate.test(study);
 	}
 	
+	/**
+	 * Check if valid description.
+	 *
+	 * @param study the study
+	 * @return true, if successful
+	 */
 	public boolean checkIfValidDescription(StudyDto study) {
 		Predicate<StudyDto> studyPredicate =  studyDto -> 
 													(studyDto.getDescription() == null || 
@@ -33,6 +49,12 @@ public class StudyPredicateUtils {
 	}
 	
 	
+	/**
+	 * Check if valid status.
+	 *
+	 * @param study the study
+	 * @return true, if successful
+	 */
 	public boolean checkIfValidStatus(StudyDto study) {
 		Predicate<StudyDto> studyPredicate =  studyDto -> 
 													(studyDto.getStatus() != null && (

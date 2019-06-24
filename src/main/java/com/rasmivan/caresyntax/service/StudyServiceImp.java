@@ -21,21 +21,31 @@ import com.rasmivan.caresyntax.helper.StudyPredicateUtils;
 import com.rasmivan.caresyntax.repository.PatientRepository;
 import com.rasmivan.caresyntax.repository.StudyRepository;
 
+/**
+ * The Class StudyServiceImp.
+ */
 @Service
 public class StudyServiceImp implements StudyService {
 	
+	/** The common validation utils. */
 	@Autowired
 	CommonValidationUtils commonValidationUtils;
 	
+	/** The study repository. */
 	@Autowired
 	StudyRepository studyRepository;
 	
+	/** The study predicate utils. */
 	@Autowired
 	StudyPredicateUtils studyPredicateUtils;
 	
+	/** The patient repository. */
 	@Autowired
 	PatientRepository patientRepository;
 
+	/* (non-Javadoc)
+	 * @see com.rasmivan.caresyntax.service.StudyService#getAllStudy(int, int)
+	 */
 	@Override
 	public Page<Study> getAllStudy(int pageNumber, int pageSize) {
 		commonValidationUtils.validatePageSizeAndPageNumber(pageNumber, pageSize);
@@ -43,6 +53,9 @@ public class StudyServiceImp implements StudyService {
 		return studyRepository.findAll(pageable);
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.rasmivan.caresyntax.service.StudyService#getStudyByPatientId(java.lang.Long)
+	 */
 	@Override
 	public Study getStudyByPatientId(Long patientId) {
 		if(patientId != null) {
@@ -57,6 +70,9 @@ public class StudyServiceImp implements StudyService {
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.rasmivan.caresyntax.service.StudyService#getStudyByPatientName(java.lang.String)
+	 */
 	@Override
 	public StudyDto getStudyByPatientName(String patientName) {
 		if(patientName != null) {
@@ -71,6 +87,9 @@ public class StudyServiceImp implements StudyService {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see com.rasmivan.caresyntax.service.StudyService#addStudy(com.rasmivan.caresyntax.dto.StudyDto)
+	 */
 	@Override
 	public Study addStudy(StudyDto studyDto) {
 		Study study = new Study();
@@ -80,6 +99,9 @@ public class StudyServiceImp implements StudyService {
 		return studyRepository.save(study);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.rasmivan.caresyntax.service.StudyService#updateStudy(com.rasmivan.caresyntax.dto.StudyDto)
+	 */
 	@Override
 	public Study updateStudy(StudyDto studyDto) {
 		Study study = new Study();
@@ -90,6 +112,9 @@ public class StudyServiceImp implements StudyService {
 		return studyRepository.save(study);
 	}
 	
+	/* (non-Javadoc)
+	 * @see com.rasmivan.caresyntax.service.StudyService#validateStudyExists(java.lang.Long)
+	 */
 	@Override
 	public boolean validateStudyExists(Long studyId) {
 		if(studyId != null) {
@@ -102,6 +127,11 @@ public class StudyServiceImp implements StudyService {
 		return true;
 	}
 	
+	/**
+	 * Validate study dto.
+	 *
+	 * @param studyDto the study dto
+	 */
 	private void validateStudyDto(StudyDto studyDto) {
 		if(studyDto != null) {
 			if(studyPredicateUtils.checkIfValidPatient(studyDto)) {
@@ -125,6 +155,13 @@ public class StudyServiceImp implements StudyService {
 	}
 	
 	
+	/**
+	 * Gets the patient details.
+	 *
+	 * @param studyDto the study dto
+	 * @param study the study
+	 * @return the patient details
+	 */
 	private void getPatientDetails(StudyDto studyDto, Study study) {
 		Optional<Patient> patient = patientRepository.findById(studyDto.getPatient());
 		if(patient.isPresent()) {

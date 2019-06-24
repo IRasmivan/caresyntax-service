@@ -14,7 +14,6 @@ import com.rasmivan.caresyntax.exception.InvalidRoomDetails;
 import com.rasmivan.caresyntax.exception.InvalidStudyDetails;
 import com.rasmivan.caresyntax.exception.PatientStudyNotFound;
 
-
 /**
  * The Class ExceptionControllerAdvice.
  */
@@ -24,6 +23,12 @@ public class ExceptionControllerAdvice {
 	/** The logger. */
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExceptionControllerAdvice.class);
 	
+	/**
+	 * Handle invalid patient details exception.
+	 *
+	 * @param e the e
+	 * @return the response entity
+	 */
 	@ExceptionHandler(value = InvalidPatientDetails.class)
 	public ResponseEntity<ResponseDto> handleInvalidPatientDetailsException(InvalidPatientDetails e) {
 		ResponseDto responseDto = new ResponseDto();
@@ -33,6 +38,12 @@ public class ExceptionControllerAdvice {
 		return new ResponseEntity<>(responseDto, HttpStatus.PRECONDITION_FAILED);  // RETURN STATUS CODE AS 412
 	}
 	
+	/**
+	 * Handle invalid page number or page size.
+	 *
+	 * @param e the e
+	 * @return the response entity
+	 */
 	@ExceptionHandler(value = InvalidPageNumberOrPageSize.class)
 	public ResponseEntity<ResponseDto> handleInvalidPageNumberOrPageSize(InvalidPageNumberOrPageSize e) {
 		ResponseDto responseDto = new ResponseDto();
@@ -42,6 +53,12 @@ public class ExceptionControllerAdvice {
 		return new ResponseEntity<>(responseDto, HttpStatus.PRECONDITION_FAILED);  // RETURN STATUS CODE AS 412
 	}
 	
+	/**
+	 * Handle patient study not found.
+	 *
+	 * @param e the e
+	 * @return the response entity
+	 */
 	@ExceptionHandler(value = PatientStudyNotFound.class)
 	public ResponseEntity<ResponseDto> handlePatientStudyNotFound(PatientStudyNotFound e) {
 		ResponseDto responseDto = new ResponseDto();
@@ -51,6 +68,12 @@ public class ExceptionControllerAdvice {
 		return new ResponseEntity<>(responseDto, HttpStatus.NOT_FOUND);  // RETURN STATUS CODE AS 404
 	}
 	
+	/**
+	 * Handle invalid study details.
+	 *
+	 * @param e the e
+	 * @return the response entity
+	 */
 	@ExceptionHandler(value = InvalidStudyDetails.class)
 	public ResponseEntity<ResponseDto> handleInvalidStudyDetails(InvalidStudyDetails e) {
 		ResponseDto responseDto = new ResponseDto();
@@ -60,6 +83,12 @@ public class ExceptionControllerAdvice {
 		return new ResponseEntity<>(responseDto, HttpStatus.PRECONDITION_FAILED);  // RETURN STATUS CODE AS 412
 	}
 	
+	/**
+	 * Handle invalid room details.
+	 *
+	 * @param e the e
+	 * @return the response entity
+	 */
 	@ExceptionHandler(value = InvalidRoomDetails.class)
 	public ResponseEntity<ResponseDto> handleInvalidRoomDetails(InvalidRoomDetails e) {
 		ResponseDto responseDto = new ResponseDto();
